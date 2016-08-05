@@ -20,7 +20,7 @@ public class LocalConstant {
     /**
      * 服务器地址
      **/
-    public static final String REMOTE_ADDRESS = "ws://10.18.1.240";
+    public static final String REMOTE_ADDRESS = "ws://10.18.1.251";
     /**
      * 服务器端口
      **/

@@ -47,8 +47,13 @@ public class ChatActivity extends AppCompatActivity {
 
     private MessageReceiveListener messageReceiveListener = new MessageReceiveListener() {
         @Override
-        public void onMessageReceive(String msg) {
-            tv_chat.setText(msg);
+        public void onMessageReceive(final String msg) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    tv_chat.setText(msg);
+                }
+            });
         }
     };
 }
