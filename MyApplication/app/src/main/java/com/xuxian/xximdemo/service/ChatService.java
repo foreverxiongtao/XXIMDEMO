@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
+import com.xuxian.xximdemo.core.XXConnection;
 import com.xuxian.xximdemo.global.BaseApplication;
 import com.xuxian.xximdemo.util.AppManager;
 
@@ -39,7 +40,7 @@ public class ChatService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         if(AppManager.getInstance().ActivityStackIsEmpty()){
             if(application == null || application.getLongConn()== null){
-                application.getLongConn().init();
+                XXConnection.getInstance().open();
             }
         }
         return super.onStartCommand(intent, flags, startId);

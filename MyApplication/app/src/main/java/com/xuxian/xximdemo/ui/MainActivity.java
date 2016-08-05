@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 XXConnection xxConnection = XXConnection.getInstance();
-                xxConnection.init();
+                xxConnection.open();
                 BaseApplication application = (BaseApplication) getApplication();
                 application.setLongConn(xxConnection);
                 startActivity(new Intent(MainActivity.this,ChatActivity.class));

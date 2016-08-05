@@ -104,7 +104,7 @@ public class XXConnection {
     /**
      * 初始化连接通道
      **/
-    public void init() {
+    private void init() {
         try {
             mClient = new WebSocketClient(new URI(LocalConstant.REMOTE_ADDRESS + ":" + LocalConstant.REMOTE_PORT), new Draft_17()) {
                 @Override
