@@ -196,9 +196,15 @@ public class XXConnection {
      *
      * @param _message
      */
-    public void sendMessage(XXMessage _message) {
+    public void sendMessage(final XXMessage _message) {
         if (mClient != null) {
-            mClient.send(_message.toJson());
+            ThreadManager.newInstance().executeShortTack(new Runnable() {
+                @Override
+                public void run() {
+                    mClient.send(_message.toJson());
+                }
+            });
         }
     }
+
 }

@@ -27,6 +27,15 @@ public class XXMessage {
 //    private int fromAvatar = 1;// 头像
 
 
+    public XXMessage(String from, String to, String type, String content, String time, String fromNick) {
+        this.from = from;
+        this.to = to;
+        this.type = type;
+        this.content = content;
+        this.time = time;
+        this.fromNick = fromNick;
+    }
+
     public String getFrom() {
         return from;
     }
