@@ -27,18 +27,13 @@ public class ChatActivity extends AppCompatActivity {
         tv_chat = (TextView) findViewById(R.id.tv_chat);
 
         application = (BaseApplication) getApplication();
-        application.getLongConn().addMessageReceiveListener(new MessageReceiveListener() {
-            @Override
-            public void onMessageReceive(String msg) {
-                tv_chat.setText(msg);
-            }
-        });
+        application.getLongConn().addMessageReceiveListener(messageReceiveListener);
     }
 
     private MessageReceiveListener messageReceiveListener = new MessageReceiveListener() {
         @Override
         public void onMessageReceive(String msg) {
-
+            tv_chat.setText(msg);
         }
     };
 }
