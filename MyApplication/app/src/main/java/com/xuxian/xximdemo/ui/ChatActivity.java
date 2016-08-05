@@ -51,7 +51,7 @@ public class ChatActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    tv_chat.setText(msg);
+                    tv_chat.append("\n"+msg);
                 }
             });
         }
