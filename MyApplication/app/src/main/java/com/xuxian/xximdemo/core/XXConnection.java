@@ -150,7 +150,7 @@ public class XXConnection {
                 }
 
                 @Override
-                public void onError(Exception ex) {
+                public void onError(final Exception ex) {
                     ThreadManager.newInstance().executeShortTack(new Runnable() {
                         @Override
                         public void run() {
