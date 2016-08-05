@@ -47,9 +47,9 @@ public class XXConnection {
      *
      * @return
      */
-    public XXConnection getInstance() {
+    public static XXConnection getInstance() {
         if (mInstance == null) {
-            synchronized (this) {
+            synchronized (XXConnection.class) {
                 if (mInstance == null) {
                     mInstance = new XXConnection();
                 }
@@ -64,7 +64,7 @@ public class XXConnection {
      *
      * @param _listener
      */
-    private void addMessageReceiveListener(MessageReceiveListener _listener) {
+    public void addMessageReceiveListener(MessageReceiveListener _listener) {
         if (_listener != null && mMessageReceiveListeners != null)
             mMessageReceiveListeners.add(_listener);
     }
@@ -74,7 +74,7 @@ public class XXConnection {
      *
      * @param _listener
      */
-    private void removeMessageReceiveListenner(MessageReceiveListener _listener) {
+    public void removeMessageReceiveListenner(MessageReceiveListener _listener) {
         if (_listener != null && mMessageReceiveListeners != null) {
             mMessageReceiveListeners.remove(_listener);
         }
@@ -85,7 +85,7 @@ public class XXConnection {
      *
      * @param _listener
      */
-    private void addRemoteServerStatusListener(RemoteServerStatusListenner _listener) {
+    public void addRemoteServerStatusListener(RemoteServerStatusListenner _listener) {
         if (_listener != null && mRemoteServerStatusListeners != null)
             mRemoteServerStatusListeners.add(_listener);
     }
@@ -95,7 +95,7 @@ public class XXConnection {
      *
      * @param _listener
      */
-    private void removeRemoteServerStatusListener(RemoteServerStatusListenner _listener) {
+    public void removeRemoteServerStatusListener(RemoteServerStatusListenner _listener) {
         if (_listener != null && mRemoteServerStatusListeners != null) {
             mRemoteServerStatusListeners.remove(_listener);
         }
@@ -104,7 +104,7 @@ public class XXConnection {
     /**
      * 初始化连接通道
      **/
-    private void init() {
+    public void init() {
         try {
             mClient = new WebSocketClient(new URI(LocalConstant.REMOTE_ADDRESS + ":" + LocalConstant.REMOTE_PORT), new Draft_17()) {
                 @Override
