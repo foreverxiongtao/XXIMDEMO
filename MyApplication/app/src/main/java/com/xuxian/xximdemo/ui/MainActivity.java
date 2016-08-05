@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.xuxian.xximdemo.R;
+import com.xuxian.xximdemo.base.BaseActivity;
 import com.xuxian.xximdemo.core.XXConnection;
 import com.xuxian.xximdemo.global.BaseApplication;
 import com.xuxian.xximdemo.service.ChatService;
@@ -26,7 +27,7 @@ import com.xuxian.xximdemo.service.ChatService;
  *
  * 修订日期 :
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     Button btn_sign_in_button;
     @Override
