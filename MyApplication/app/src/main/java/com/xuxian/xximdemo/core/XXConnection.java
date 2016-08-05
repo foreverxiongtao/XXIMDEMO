@@ -4,6 +4,7 @@ import com.xuxian.xximdemo.bean.XXMessage;
 import com.xuxian.xximdemo.global.LocalConstant;
 import com.xuxian.xximdemo.listener.MessageReceiveListener;
 import com.xuxian.xximdemo.listener.RemoteServerStatusListenner;
+import com.xuxian.xximdemo.utils.ThreadManager;
 
 import org.java_websocket.WebSocketImpl;
 import org.java_websocket.client.WebSocketClient;
@@ -30,11 +31,32 @@ import java.util.List;
  *
  * 修订日期 :
  */
-public class XXConnection extends Thread {
+public class XXConnection {
 
     private WebSocketClient mClient; //消息连接通道
     private List<MessageReceiveListener> mMessageReceiveListeners = new ArrayList<>();
     private List<RemoteServerStatusListenner> mRemoteServerStatusListeners = new ArrayList<>();
+    private static volatile XXConnection mInstance;
+
+    private XXConnection() {
+
+    }
+
+    /***
+     * 获取实例对象
+     *
+     * @return
+     */
+    public XXConnection getInstance() {
+        if (mInstance == null) {
+            synchronized (this) {
+                if (mInstance == null) {
+                    mInstance = new XXConnection();
+                }
+            }
+        }
+        return mInstance;
+    }
 
 
     /***
@@ -86,39 +108,59 @@ public class XXConnection extends Thread {
         try {
             mClient = new WebSocketClient(new URI(LocalConstant.REMOTE_ADDRESS + ":" + LocalConstant.REMOTE_PORT), new Draft_17()) {
                 @Override
-                public void onOpen(ServerHandshake handshakedata) {
-                    for (RemoteServerStatusListenner listener : mRemoteServerStatusListeners) {
-                        if (listener != null) {
-                            listener.on0pen(handshakedata);
+                public void onOpen(final ServerHandshake handshakedata) {
+                    ThreadManager.newInstance().executeShortTack(new Runnable() {
+                        @Override
+                        public void run() {
+                            for (RemoteServerStatusListenner listener : mRemoteServerStatusListeners) {
+                                if (listener != null) {
+                                    listener.on0pen(handshakedata);
+                                }
+                            }
                         }
-                    }
+                    });
                 }
 
                 @Override
-                public void onMessage(String message) {
-                    for (MessageReceiveListener listener : mMessageReceiveListeners) {
-                        if (listener != null) {
-                            listener.onMessageReceive(message);
+                public void onMessage(final String message) {
+                    ThreadManager.newInstance().executeShortTack(new Runnable() {
+                        @Override
+                        public void run() {
+                            for (MessageReceiveListener listener : mMessageReceiveListeners) {
+                                if (listener != null) {
+                                    listener.onMessageReceive(message);
+                                }
+                            }
                         }
-                    }
+                    });
                 }
 
                 @Override
-                public void onClose(int code, String reason, boolean remote) {
-                    for (RemoteServerStatusListenner listener : mRemoteServerStatusListeners) {
-                        if (listener != null) {
-                            listener.onClose(code, reason, remote);
+                public void onClose(final int code, final String reason, final boolean remote) {
+                    ThreadManager.newInstance().executeShortTack(new Runnable() {
+                        @Override
+                        public void run() {
+                            for (RemoteServerStatusListenner listener : mRemoteServerStatusListeners) {
+                                if (listener != null) {
+                                    listener.onClose(code, reason, remote);
+                                }
+                            }
                         }
-                    }
+                    });
                 }
 
                 @Override
-                public void onError(Exception ex) {
-                    for (RemoteServerStatusListenner listener : mRemoteServerStatusListeners) {
-                        if (listener != null) {
-                            listener.onError(ex);
+                public void onError(final Exception ex) {
+                    ThreadManager.newInstance().executeShortTack(new Runnable() {
+                        @Override
+                        public void run() {
+                            for (RemoteServerStatusListenner listener : mRemoteServerStatusListeners) {
+                                if (listener != null) {
+                                    listener.onError(ex);
+                                }
+                            }
                         }
-                    }
+                    });
                 }
             };
             WebSocketImpl.DEBUG = true;
@@ -136,6 +178,7 @@ public class XXConnection extends Thread {
         if (mClient == null) {
             init();
         }
+        mClient.connect();
     }
 
     /****
