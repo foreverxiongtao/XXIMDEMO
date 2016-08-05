@@ -2,8 +2,15 @@ package com.xuxian.xximdemo.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import com.thoughtworks.xstream.XStream;
 import com.xuxian.xximdemo.R;
+import com.xuxian.xximdemo.bean.UserListBean;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  *
  *
@@ -25,5 +32,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
     }
 }
