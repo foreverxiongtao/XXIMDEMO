@@ -9,6 +9,7 @@ import android.widget.Button;
 import com.xuxian.xximdemo.R;
 import com.xuxian.xximdemo.core.XXConnection;
 import com.xuxian.xximdemo.global.BaseApplication;
+import com.xuxian.xximdemo.service.ChatService;
 
 /*
  *
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 xxConnection.open();
                 BaseApplication application = (BaseApplication) getApplication();
                 application.setLongConn(xxConnection);
+                startService(new Intent(MainActivity.this, ChatService.class));
                 startActivity(new Intent(MainActivity.this,ChatActivity.class));
             }
         });
