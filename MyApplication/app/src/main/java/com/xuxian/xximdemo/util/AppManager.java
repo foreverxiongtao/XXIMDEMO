@@ -42,10 +42,10 @@ public class AppManager {
         mActivityStack.add(activity);
     }
 
-    public boolean ActivityStackIsEmpty(){
-        if (mActivityStack.isEmpty()){
+    public boolean ActivityStackIsEmpty() {
+        if (mActivityStack != null && mActivityStack.isEmpty()) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }

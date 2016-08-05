@@ -6,6 +6,7 @@ import com.xuxian.xximdemo.listener.MessageReceiveListener;
 import com.xuxian.xximdemo.listener.RemoteServerStatusListenner;
 import com.xuxian.xximdemo.utils.ThreadManager;
 
+import org.java_websocket.WebSocket;
 import org.java_websocket.WebSocketImpl;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft_17;
@@ -178,7 +179,11 @@ public class XXConnection {
         if (mClient == null) {
             init();
         }
-        mClient.connect();
+        WebSocket tempConnection = mClient.getConnection();
+        /**判断通道是否已经打开，如果没有打开，再去连接**/
+        if (tempConnection.getReadyState() != WebSocket.READYSTATE.OPEN) {
+            mClient.connect();
+        }
     }
 
     /****

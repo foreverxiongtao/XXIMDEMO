@@ -44,7 +44,6 @@ public class ChatService extends Service {
             }
         }
         return super.onStartCommand(intent, flags, startId);
-
     }
 
     @Nullable
