@@ -9,6 +9,8 @@ import android.widget.Toast;
 import com.thoughtworks.xstream.XStream;
 import com.xuxian.xximdemo.R;
 import com.xuxian.xximdemo.bean.UserListBean;
+import com.xuxian.xximdemo.core.XXConnection;
+import com.xuxian.xximdemo.global.BaseApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,12 +37,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         btn_sign_in_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                XXConnection xxConnection = XXConnection.getInstance();
+                xxConnection.init();
+                BaseApplication application = (BaseApplication) getApplication();
+                application.setLongConn(xxConnection);
             }
         });
+
 
     }
 }
