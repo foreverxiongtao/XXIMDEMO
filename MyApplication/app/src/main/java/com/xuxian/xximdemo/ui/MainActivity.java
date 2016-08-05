@@ -1,20 +1,14 @@
 package com.xuxian.xximdemo.ui;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.thoughtworks.xstream.XStream;
 import com.xuxian.xximdemo.R;
-import com.xuxian.xximdemo.bean.UserListBean;
 import com.xuxian.xximdemo.core.XXConnection;
 import com.xuxian.xximdemo.global.BaseApplication;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /*
  *
