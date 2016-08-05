@@ -4,14 +4,9 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.widget.Toast;
 
-import com.xuxian.xximdemo.bean.XXMessage;
-import com.xuxian.xximdemo.core.XXConnection;
 import com.xuxian.xximdemo.global.BaseApplication;
-import com.xuxian.xximdemo.listener.MessageReceiveListener;
 import com.xuxian.xximdemo.util.AppManager;
-import com.xuxian.xximdemo.utils.ThreadManager;
 
 /*
  *
