@@ -1,5 +1,7 @@
 package com.xuxian.xximdemo.bean;
 
+import com.alibaba.fastjson.JSON;
+
 /*
  *
  *
@@ -71,5 +73,9 @@ public class XXMessage {
 
     public void setFromNick(String _fromNick) {
         fromNick = _fromNick;
+    }
+
+    public String toJson() {
+        return JSON.toJSONString(this);
     }
 }
