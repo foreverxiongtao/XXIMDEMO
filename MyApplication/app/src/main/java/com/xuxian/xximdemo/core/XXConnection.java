@@ -9,6 +9,7 @@ import com.xuxian.xximdemo.global.LocalConstant;
 import com.xuxian.xximdemo.listener.MessageReceiveListener;
 import com.xuxian.xximdemo.listener.RemoteServerStatusListenner;
 import com.xuxian.xximdemo.service.WebSocketService;
+import com.xuxian.xximdemo.util.ConnectionRegisterException;
 import com.xuxian.xximdemo.utils.ThreadManager;
 
 import org.java_websocket.WebSocket;
@@ -180,7 +181,7 @@ public class XXConnection {
     /***
      * 连接夫妇器
      */
-    private void open() {
+    private void open() throws IllegalStateException {
         if (mClient == null) {
             init();
         }
@@ -190,11 +191,7 @@ public class XXConnection {
             Log.i(XXConnection.class.getSimpleName(), tempConnection.getReadyState() + "");
         }
         if (tempConnection.getReadyState() != WebSocket.READYSTATE.OPEN) {
-            try {
-                mClient.connect();
-            } catch (IllegalStateException exception) {
-
-            }
+            mClient.connect();
         }
     }
 
@@ -204,10 +201,14 @@ public class XXConnection {
      *
      * @param _context
      */
-    public void registerService(Context _context) {
+    public void registerService(Context _context) throws Exception {
         if (_context != null) {
-            open();
-            _context.startService(new Intent(_context, WebSocketService.class));
+            try {
+                open();
+                _context.startService(new Intent(_context, WebSocketService.class));
+            } catch (IllegalStateException exception) {
+                throw new ConnectionRegisterException("websocket通道连接异常");
+            }
         }
     }
 

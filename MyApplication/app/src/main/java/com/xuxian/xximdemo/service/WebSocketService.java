@@ -84,7 +84,11 @@ public class WebSocketService extends Service {
         super.onCreate();
         mXXConnection = XXConnection.getInstance();
         if (mXXConnection != null) {
-            mXXConnection.registerService(this);
+            try {
+                mXXConnection.registerService(this);
+            } catch (Exception _e) {
+                _e.printStackTrace();
+            }
             mXXConnection.addMessageReceiveListener(messageReceiveListener);
         }
     }
@@ -94,7 +98,11 @@ public class WebSocketService extends Service {
         application = (BaseApplication) getApplication();
         if (AppManager.getInstance().ActivityStackIsEmpty()) {
             if (application == null) {
-                mXXConnection.registerService(this);
+                try {
+                    mXXConnection.registerService(this);
+                } catch (Exception _e) {
+                    _e.printStackTrace();
+                }
             }
         }
         return super.onStartCommand(intent, flags, startId);

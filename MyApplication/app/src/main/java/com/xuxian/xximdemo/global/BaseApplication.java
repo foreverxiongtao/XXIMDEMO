@@ -26,6 +26,10 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        XXConnection.getInstance().registerService(this);
+        try {
+            XXConnection.getInstance().registerService(this);
+        } catch (Exception _e) {
+            _e.printStackTrace();
+        }
     }
 }
