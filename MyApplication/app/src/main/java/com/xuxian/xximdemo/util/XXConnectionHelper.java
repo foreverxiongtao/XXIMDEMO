@@ -3,6 +3,7 @@ package com.xuxian.xximdemo.util;
 import android.content.Context;
 import android.content.Intent;
 
+import com.xuxian.xximdemo.bean.XXMessage;
 import com.xuxian.xximdemo.core.XXConnection;
 import com.xuxian.xximdemo.listener.MessageReceiveListener;
 import com.xuxian.xximdemo.service.WebSocketService;
@@ -63,5 +64,10 @@ public class XXConnectionHelper {
      **/
     public static void registerService() throws ConnectionRegisterException {
         XXConnection.getInstance().registerService();
+    }
+
+
+    public static void sendMessage(XXMessage _message) {
+        XXConnection.getInstance().sendMessage(_message);
     }
 }
