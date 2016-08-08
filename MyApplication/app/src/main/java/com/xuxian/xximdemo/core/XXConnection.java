@@ -2,6 +2,7 @@ package com.xuxian.xximdemo.core;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.xuxian.xximdemo.bean.XXMessage;
 import com.xuxian.xximdemo.global.LocalConstant;
@@ -185,8 +186,15 @@ public class XXConnection {
         }
         WebSocket tempConnection = mClient.getConnection();
         /**判断通道是否已经打开，如果没有打开，再去连接**/
+        if (tempConnection != null) {
+            Log.i(XXConnection.class.getSimpleName(), tempConnection.getReadyState() + "");
+        }
         if (tempConnection.getReadyState() != WebSocket.READYSTATE.OPEN) {
-            mClient.connect();
+            try {
+                mClient.connect();
+            } catch (IllegalStateException exception) {
+
+            }
         }
     }
 
