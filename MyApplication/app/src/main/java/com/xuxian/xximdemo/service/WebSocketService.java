@@ -83,6 +83,7 @@ public class WebSocketService extends Service {
     public void onCreate() {
         super.onCreate();
         application = (BaseApplication) getApplication();
+        application.getLongConn().addMessageReceiveListener(messageReceiveListener);
 
     }
 
