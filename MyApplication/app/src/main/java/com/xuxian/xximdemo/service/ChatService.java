@@ -1,3 +1,4 @@
+/*
 package com.xuxian.xximdemo.service;
 
 import android.app.Service;
@@ -9,6 +10,7 @@ import com.xuxian.xximdemo.core.XXConnection;
 import com.xuxian.xximdemo.global.BaseApplication;
 import com.xuxian.xximdemo.util.AppManager;
 
+*/
 /*
  *
  *
@@ -23,7 +25,8 @@ import com.xuxian.xximdemo.util.AppManager;
  * 描 述 :聊天服务
  *
  * 修订日期 :
- */
+ *//*
+
 public class ChatService extends Service {
 
 
@@ -52,3 +55,4 @@ public class ChatService extends Service {
         return null;
     }
 }
+*/

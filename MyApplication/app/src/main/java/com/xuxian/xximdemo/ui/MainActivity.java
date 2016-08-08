@@ -9,7 +9,6 @@ import com.xuxian.xximdemo.R;
 import com.xuxian.xximdemo.base.BaseActivity;
 import com.xuxian.xximdemo.core.XXConnection;
 import com.xuxian.xximdemo.global.BaseApplication;
-import com.xuxian.xximdemo.service.ChatService;
 import com.xuxian.xximdemo.service.WebSocketService;
 
 /*
