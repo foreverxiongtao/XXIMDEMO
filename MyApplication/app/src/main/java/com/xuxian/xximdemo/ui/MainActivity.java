@@ -7,8 +7,6 @@ import android.widget.Button;
 
 import com.xuxian.xximdemo.R;
 import com.xuxian.xximdemo.base.BaseActivity;
-import com.xuxian.xximdemo.core.XXConnection;
-import com.xuxian.xximdemo.global.BaseApplication;
 import com.xuxian.xximdemo.service.WebSocketService;
 
 /*
@@ -29,6 +27,7 @@ import com.xuxian.xximdemo.service.WebSocketService;
 public class MainActivity extends BaseActivity {
 
     Button btn_sign_in_button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +36,7 @@ public class MainActivity extends BaseActivity {
         btn_sign_in_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                XXConnection xxConnection = XXConnection.getInstance();
-                xxConnection.open();
-                BaseApplication application = (BaseApplication) getApplication();
-                application.setLongConn(xxConnection);
-                startService(new Intent(MainActivity.this, WebSocketService.class));
-                startActivity(new Intent(MainActivity.this,ChatActivity.class));
+                startActivity(new Intent(MainActivity.this, ChatActivity.class));
             }
         });
     }

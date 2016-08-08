@@ -1,9 +1,13 @@
 package com.xuxian.xximdemo.core;
 
+import android.content.Context;
+import android.content.Intent;
+
 import com.xuxian.xximdemo.bean.XXMessage;
 import com.xuxian.xximdemo.global.LocalConstant;
 import com.xuxian.xximdemo.listener.MessageReceiveListener;
 import com.xuxian.xximdemo.listener.RemoteServerStatusListenner;
+import com.xuxian.xximdemo.service.WebSocketService;
 import com.xuxian.xximdemo.utils.ThreadManager;
 
 import org.java_websocket.WebSocket;
@@ -175,7 +179,7 @@ public class XXConnection {
     /***
      * 连接夫妇器
      */
-    public void open() {
+    private void open() {
         if (mClient == null) {
             init();
         }
@@ -183,6 +187,19 @@ public class XXConnection {
         /**判断通道是否已经打开，如果没有打开，再去连接**/
         if (tempConnection.getReadyState() != WebSocket.READYSTATE.OPEN) {
             mClient.connect();
+        }
+    }
+
+
+    /***
+     * 注册服务
+     *
+     * @param _context
+     */
+    public void registerService(Context _context) {
+        if (_context != null) {
+            open();
+            _context.startService(new Intent(_context, WebSocketService.class));
         }
     }
 

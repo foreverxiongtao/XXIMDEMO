@@ -12,19 +12,20 @@ import com.xuxian.xximdemo.core.XXConnection;
  * 版本：
  */
 public class BaseApplication extends Application {
-
-    private XXConnection connection;
-
-    public XXConnection getLongConn() {
-        return connection;
-    }
-
-    public void setLongConn(XXConnection connection) {
-        this.connection = connection;
-    }
+//
+//    private XXConnection connection;
+//
+//    public XXConnection getLongConn() {
+//        return connection;
+//    }
+//
+//    public void setLongConn(XXConnection connection) {
+//        this.connection = connection;
+//    }
 
     @Override
     public void onCreate() {
         super.onCreate();
+        XXConnection.getInstance().registerService(this);
     }
 }

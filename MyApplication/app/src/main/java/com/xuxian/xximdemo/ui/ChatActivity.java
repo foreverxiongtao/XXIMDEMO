@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.xuxian.xximdemo.R;
 import com.xuxian.xximdemo.bean.XXMessage;
-import com.xuxian.xximdemo.global.BaseApplication;
+import com.xuxian.xximdemo.core.XXConnection;
 import com.xuxian.xximdemo.listener.MessageReceiveListener;
 
 /**
@@ -22,7 +22,6 @@ import com.xuxian.xximdemo.listener.MessageReceiveListener;
 public class ChatActivity extends AppCompatActivity {
 
     private TextView tv_chat;
-    private BaseApplication application;
     private Button btn_send;
     private EditText edit;
 
@@ -34,13 +33,12 @@ public class ChatActivity extends AppCompatActivity {
         btn_send = (Button) findViewById(R.id.btn_send);
         edit = (EditText) findViewById(R.id.edit);
 
-        application = (BaseApplication) getApplication();
-        application.getLongConn().addMessageReceiveListener(messageReceiveListener);
+        XXConnection.getInstance().addMessageReceiveListener(messageReceiveListener);
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String text = edit.getText().toString();
-                application.getLongConn().sendMessage(new XXMessage("","","",text,"",""));
+                XXConnection.getInstance().sendMessage(new XXMessage("", "", "", text, "", ""));
             }
         });
     }
@@ -51,7 +49,7 @@ public class ChatActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    tv_chat.append("\n"+msg);
+                    tv_chat.append("\n" + msg);
                 }
             });
         }
