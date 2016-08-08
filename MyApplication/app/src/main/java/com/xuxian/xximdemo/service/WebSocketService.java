@@ -13,11 +13,11 @@ import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import com.xuxian.xximdemo.R;
-import com.xuxian.xximdemo.core.XXConnection;
 import com.xuxian.xximdemo.global.BaseApplication;
 import com.xuxian.xximdemo.listener.MessageReceiveListener;
 import com.xuxian.xximdemo.ui.ChatActivity;
-import com.xuxian.xximdemo.util.AppManager;
+import com.xuxian.xximdemo.util.ConnectionRegisterException;
+import com.xuxian.xximdemo.util.XXConnectionHelper;
 
 import java.util.List;
 
@@ -77,33 +77,19 @@ public class WebSocketService extends Service {
             }
         }
     };
-    private XXConnection mXXConnection;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mXXConnection = XXConnection.getInstance();
-        if (mXXConnection != null) {
-            try {
-                mXXConnection.registerService(this);
-            } catch (Exception _e) {
-                _e.printStackTrace();
-            }
-            mXXConnection.addMessageReceiveListener(messageReceiveListener);
-        }
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        application = (BaseApplication) getApplication();
-        if (AppManager.getInstance().ActivityStackIsEmpty()) {
-            if (application == null) {
-                try {
-                    mXXConnection.registerService(this);
-                } catch (Exception _e) {
-                    _e.printStackTrace();
-                }
-            }
+        try {
+            XXConnectionHelper.registerService();
+            XXConnectionHelper.addMessageReceiveListener(messageReceiveListener);
+        } catch (ConnectionRegisterException _e) {
+            _e.printStackTrace();
         }
         return super.onStartCommand(intent, flags, startId);
     }
@@ -112,9 +98,8 @@ public class WebSocketService extends Service {
     public void onDestroy() {
         super.onDestroy();
         if (messageReceiveListener != null) {
-            mXXConnection.removeMessageReceiveListenner(messageReceiveListener);
+            XXConnectionHelper.removeMessageReceiveListener(messageReceiveListener);
             messageReceiveListener = null;
-            mXXConnection = null;
         }
     }
 

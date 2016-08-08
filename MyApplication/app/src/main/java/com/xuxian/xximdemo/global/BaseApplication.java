@@ -2,7 +2,7 @@ package com.xuxian.xximdemo.global;
 
 import android.app.Application;
 
-import com.xuxian.xximdemo.core.XXConnection;
+import com.xuxian.xximdemo.util.XXConnectionHelper;
 
 /**
  * 类名称：
@@ -27,7 +27,7 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         try {
-            XXConnection.getInstance().registerService(this);
+            XXConnectionHelper.startService(this);
         } catch (Exception _e) {
             _e.printStackTrace();
         }

@@ -1,14 +1,11 @@
 package com.xuxian.xximdemo.core;
 
-import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 import com.xuxian.xximdemo.bean.XXMessage;
 import com.xuxian.xximdemo.global.LocalConstant;
 import com.xuxian.xximdemo.listener.MessageReceiveListener;
 import com.xuxian.xximdemo.listener.RemoteServerStatusListenner;
-import com.xuxian.xximdemo.service.WebSocketService;
 import com.xuxian.xximdemo.util.ConnectionRegisterException;
 import com.xuxian.xximdemo.utils.ThreadManager;
 
@@ -72,7 +69,7 @@ public class XXConnection {
      * @param _listener
      */
     public void addMessageReceiveListener(MessageReceiveListener _listener) {
-        if (_listener != null && mMessageReceiveListeners != null)
+        if (_listener != null && mMessageReceiveListeners != null && !mMessageReceiveListeners.contains(_listener))
             mMessageReceiveListeners.add(_listener);
     }
 
@@ -93,7 +90,7 @@ public class XXConnection {
      * @param _listener
      */
     public void addRemoteServerStatusListener(RemoteServerStatusListenner _listener) {
-        if (_listener != null && mRemoteServerStatusListeners != null)
+        if (_listener != null && mRemoteServerStatusListeners != null && !mRemoteServerStatusListeners.contains(_listener))
             mRemoteServerStatusListeners.add(_listener);
     }
 
@@ -198,17 +195,12 @@ public class XXConnection {
 
     /***
      * 注册服务
-     *
-     * @param _context
      */
-    public void registerService(Context _context) throws Exception {
-        if (_context != null) {
-            try {
-                open();
-                _context.startService(new Intent(_context, WebSocketService.class));
-            } catch (IllegalStateException exception) {
-                throw new ConnectionRegisterException("websocket通道连接异常");
-            }
+    public void registerService() throws ConnectionRegisterException {
+        try {
+            open();
+        } catch (IllegalStateException exception) {
+            throw new ConnectionRegisterException("websocket通道连接异常");
         }
     }
 

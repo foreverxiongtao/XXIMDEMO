@@ -7,7 +7,6 @@ import android.widget.Button;
 
 import com.xuxian.xximdemo.R;
 import com.xuxian.xximdemo.base.BaseActivity;
-import com.xuxian.xximdemo.service.WebSocketService;
 
 /*
  *
