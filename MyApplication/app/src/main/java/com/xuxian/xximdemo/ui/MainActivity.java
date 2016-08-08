@@ -10,6 +10,7 @@ import com.xuxian.xximdemo.base.BaseActivity;
 import com.xuxian.xximdemo.core.XXConnection;
 import com.xuxian.xximdemo.global.BaseApplication;
 import com.xuxian.xximdemo.service.ChatService;
+import com.xuxian.xximdemo.service.WebSocketService;
 
 /*
  *
@@ -41,7 +42,7 @@ public class MainActivity extends BaseActivity {
                 xxConnection.open();
                 BaseApplication application = (BaseApplication) getApplication();
                 application.setLongConn(xxConnection);
-                startService(new Intent(MainActivity.this, ChatService.class));
+                startService(new Intent(MainActivity.this, WebSocketService.class));
                 startActivity(new Intent(MainActivity.this,ChatActivity.class));
             }
         });
