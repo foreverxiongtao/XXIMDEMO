@@ -12,6 +12,8 @@ import com.xuxian.xximdemo.R;
 import com.xuxian.xximdemo.bean.XXMessage;
 import com.xuxian.xximdemo.core.XXConnection;
 import com.xuxian.xximdemo.listener.MessageReceiveListener;
+import com.xuxian.xximdemo.util.ConnectionRegisterException;
+import com.xuxian.xximdemo.util.XXConnectionHelper;
 
 /**
  * 类描述：聊天界面
@@ -37,6 +39,11 @@ public class ChatActivity extends AppCompatActivity {
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try {
+                    XXConnectionHelper.startService(ChatActivity.this);
+                } catch (ConnectionRegisterException _e) {
+                    _e.printStackTrace();
+                }
                 String text = edit.getText().toString();
                 XXConnection.getInstance().sendMessage(new XXMessage("", "", "", text, "", ""));
             }

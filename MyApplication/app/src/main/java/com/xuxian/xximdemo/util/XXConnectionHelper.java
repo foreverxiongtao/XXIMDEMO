@@ -31,7 +31,7 @@ public class XXConnectionHelper {
      * @throws Exception
      */
     public static void startService(Context _context) throws ConnectionRegisterException {
-        if (!AppUtils.isServiceWork(_context, "com.xuxian.xximdemo.WebSocketService")) {
+        if (!AppUtils.isServiceWork(_context, "com.xuxian.xximdemo.service.WebSocketService")) {
             _context.startService(new Intent(_context, WebSocketService.class));
         }
     }
