@@ -19,14 +19,14 @@ import com.xuxian.xximdemo.service.WebSocketService;
  *
  * 创建日期 :2016/8/8  13:40
  *
- * 描 述 :连接通道工具类
+ * 描 述 :消息通道工具类
  *
  * 修订日期 :
  */
 public class XXConnectionHelper {
 
     /***
-     * 开启服务
+     * 开启消息服务通道
      *
      * @param _context
      * @throws Exception
@@ -67,6 +67,11 @@ public class XXConnectionHelper {
     }
 
 
+    /***
+     * 发送消息
+     *
+     * @param _message
+     */
     public static void sendMessage(XXMessage _message) {
         XXConnection.getInstance().sendMessage(_message);
     }
