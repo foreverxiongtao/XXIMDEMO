@@ -6,19 +6,25 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.xuxian.xximdemo.R;
+import com.xuxian.xximdemo.core.XXConnection;
 import com.xuxian.xximdemo.global.BaseApplication;
 import com.xuxian.xximdemo.listener.MessageReceiveListener;
+import com.xuxian.xximdemo.listener.RemoteServerStatusListenner;
 import com.xuxian.xximdemo.ui.ChatActivity;
 import com.xuxian.xximdemo.util.AppManager;
 import com.xuxian.xximdemo.util.ConnectionRegisterException;
 import com.xuxian.xximdemo.util.XXConnectionHelper;
+
+import org.java_websocket.handshake.ServerHandshake;
 
 import java.util.List;
 
@@ -30,6 +36,47 @@ import java.util.List;
  */
 public class WebSocketService extends Service {
     private BaseApplication application;
+    private static final long HEART_BEAT_RATE = 3 * 1000;
+    private long sendTime = 0L;
+    private Handler mHandler = new Handler();
+    private Runnable heartBeatRunnable = new Runnable() {
+
+        @Override
+        public void run() {
+            if (System.currentTimeMillis() - sendTime >= HEART_BEAT_RATE) {
+                boolean isSuccess = XXConnection.getInstance().socketIsConnected();
+                if (!isSuccess) {
+                    mHandler.removeCallbacks(heartBeatRunnable);
+                    try {
+                        XXConnectionHelper.closeConnection();
+                        XXConnectionHelper.registerService();
+                    } catch (ConnectionRegisterException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    Toast.makeText(WebSocketService.this,"sucess",Toast.LENGTH_SHORT).show();
+                }
+            }
+            mHandler.postDelayed(this, HEART_BEAT_RATE);
+        }
+    };
+
+    private RemoteServerStatusListenner remoteServerStatusListenner = new RemoteServerStatusListenner() {
+        @Override
+        public void on0pen(ServerHandshake handshakedata) {
+
+        }
+
+        @Override
+        public void onClose(int code, String reason, boolean remote) {
+
+        }
+
+        @Override
+        public void onError(Exception ex) {
+
+        }
+    };
     private MessageReceiveListener messageReceiveListener = new MessageReceiveListener() {
         @Override
         public void onMessageReceive(String msg) {
@@ -91,6 +138,7 @@ public class WebSocketService extends Service {
         try {
             XXConnectionHelper.registerService();
             XXConnectionHelper.addMessageReceiveListener(messageReceiveListener);
+            mHandler.postDelayed(heartBeatRunnable, HEART_BEAT_RATE);//初始化成功后，就准备发送心跳包
         } catch (ConnectionRegisterException _e) {
             _e.printStackTrace();
         }

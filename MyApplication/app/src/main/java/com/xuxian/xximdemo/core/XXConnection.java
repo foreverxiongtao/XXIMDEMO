@@ -2,6 +2,7 @@ package com.xuxian.xximdemo.core;
 
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
 import com.xuxian.xximdemo.bean.XXMessage;
 import com.xuxian.xximdemo.global.LocalConstant;
 import com.xuxian.xximdemo.listener.MessageReceiveListener;
@@ -13,6 +14,7 @@ import org.java_websocket.WebSocket;
 import org.java_websocket.WebSocketImpl;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.drafts.Draft_17;
+import org.java_websocket.exceptions.WebsocketNotConnectedException;
 import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
@@ -46,6 +48,8 @@ public class XXConnection {
 
     }
 
+
+
     /***
      * 获取实例对象
      *
@@ -60,6 +64,22 @@ public class XXConnection {
             }
         }
         return mInstance;
+    }
+
+    /**
+     * 判断当前连接是否正常
+     * @return
+     */
+    public boolean socketIsConnected(){
+        if(mClient != null){
+            if (mClient.getReadyState() == WebSocket.READYSTATE.OPEN) {
+                return true;
+            }else {
+                return false;
+            }
+        }else{
+            return false;
+        }
     }
 
 
@@ -229,5 +249,6 @@ public class XXConnection {
             });
         }
     }
+
 
 }

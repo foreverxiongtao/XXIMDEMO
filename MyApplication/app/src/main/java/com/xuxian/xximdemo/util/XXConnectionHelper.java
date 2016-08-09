@@ -75,4 +75,11 @@ public class XXConnectionHelper {
     public static void sendMessage(XXMessage _message) {
         XXConnection.getInstance().sendMessage(_message);
     }
+
+    /**
+     * 关闭连接
+     */
+    public static void closeConnection(){
+        XXConnection.getInstance().close();
+    }
 }

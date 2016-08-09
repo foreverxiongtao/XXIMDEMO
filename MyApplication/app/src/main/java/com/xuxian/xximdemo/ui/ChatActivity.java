@@ -39,6 +39,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String text = edit.getText().toString();
+                edit.setText("");
                 //XXConnection.getInstance().sendMessage(new XXMessage("", "", "", text, "", ""));
                 XXConnectionHelper.sendMessage(new XXMessage("", "", "", text, "", ""));
             }
