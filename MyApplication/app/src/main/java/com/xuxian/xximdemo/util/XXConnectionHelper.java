@@ -79,7 +79,26 @@ public class XXConnectionHelper {
     /**
      * 关闭连接
      */
-    public static void closeConnection(){
+    public static void closeConnection() throws Exception {
         XXConnection.getInstance().close();
+    }
+
+    /***
+     * 检查服务器通道是否处于连接状态
+     *
+     * @return
+     */
+    public static boolean checkIsConnected() {
+        return XXConnection.getInstance().socketIsConnected();
+    }
+
+    /***
+     * 重连服务器
+     *
+     * @throws Exception
+     */
+    public static void reConnect() throws Exception {
+        closeConnection();
+        registerService();
     }
 }

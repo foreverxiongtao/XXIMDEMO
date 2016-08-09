@@ -15,7 +15,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.xuxian.xximdemo.R;
-import com.xuxian.xximdemo.core.XXConnection;
 import com.xuxian.xximdemo.global.BaseApplication;
 import com.xuxian.xximdemo.listener.MessageReceiveListener;
 import com.xuxian.xximdemo.listener.RemoteServerStatusListenner;
@@ -44,17 +43,18 @@ public class WebSocketService extends Service {
         @Override
         public void run() {
             if (System.currentTimeMillis() - sendTime >= HEART_BEAT_RATE) {
-                boolean isSuccess = XXConnection.getInstance().socketIsConnected();
+                boolean isSuccess = XXConnectionHelper.checkIsConnected();
                 if (!isSuccess) {
-                    mHandler.removeCallbacks(heartBeatRunnable);
+                    mHandler.removeCallbacks(this);
                     try {
-                        XXConnectionHelper.closeConnection();
-                        XXConnectionHelper.registerService();
+                        XXConnectionHelper.reConnect();
                     } catch (ConnectionRegisterException e) {
                         e.printStackTrace();
+                    } catch (Exception e) {
+
                     }
-                }else{
-                    Toast.makeText(WebSocketService.this,"sucess",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(WebSocketService.this, "sucess", Toast.LENGTH_SHORT).show();
                 }
             }
             mHandler.postDelayed(this, HEART_BEAT_RATE);
@@ -80,7 +80,7 @@ public class WebSocketService extends Service {
     private MessageReceiveListener messageReceiveListener = new MessageReceiveListener() {
         @Override
         public void onMessageReceive(String msg) {
-            if(AppManager.getInstance().ActivityStackIsEmpty()){
+            if (AppManager.getInstance().ActivityStackIsEmpty()) {
                 //获得活动管理器
                 ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
                 //获取当前互动栈顶的活动信息
