@@ -24,6 +24,18 @@ public class TextMessageBody extends XXMessageBody {
         this.content = in.readString();
     }
 
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String _content) {
+        content = _content;
+    }
+
+    public TextMessageBody(String _content) {
+        this.content = _content;
+    }
+
     @Override
     public int describeContents() {
         return 0;
