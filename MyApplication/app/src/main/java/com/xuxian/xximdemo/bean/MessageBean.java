@@ -1,119 +1,117 @@
 package com.xuxian.xximdemo.bean;
 
-import com.alibaba.fastjson.JSON;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Hashtable;
 
-/*
- *
- *
- * 版 权 :@Copyright 北京优多鲜道科技有限公司版权所有
- *
- * 作 者 :desperado
- *
- * 版 本 :1.0
- *
- * 创建日期 :2016/8/5  14:09
- *
- * 描 述 :消息体
- *
- * 修订日期 :
+/**
+ * 类名称：
+ * 类描述：
+ * 创建人：quzongyang
+ * 创建时间：2016/8/10. 17:25
+ * 版本：
  */
-public class XXMessage {
-    private String from;        //发送者
-    private String to;          //接收者
-    private String type;        //消息类型
-    private String time;      //发送时间
-    private String fromNick = "";// 昵称
+public class MessageBean {
+
+    /**
+     * from :
+     * fromAvatar : 1
+     * fromNick :
+     * time :
+     * to :
+     * type :
+     * unread : false
+     */
+
+    private String from;
     private int fromAvatar = 1;// 头像
+    private String fromNick;
+    private String time;
+    private String to;
+    private String type;
+    private boolean unread;
+    private XXMessageBody mXXMessageBody; //消息实体
     private Hashtable<String, Object> attributes;//扩展属性
-    private boolean unread;//是否已经阅读
 
-    //private XXMessageBody messageBody; //消息实体
-    private TextMessageBody messageBody;//消息实体
+    public MessageBean(){
 
-    public int getFromAvatar() {
-        return fromAvatar;
     }
 
-    public void setFromAvatar(int _fromAvatar) {
-        fromAvatar = _fromAvatar;
-    }
-
-    public boolean isUnread() {
-        return unread;
-    }
-
-    public void setUnread(boolean _unread) {
-        unread = _unread;
-    }
-
-    public XXMessageBody getMessageBody() {
-        return messageBody;
-    }
-
-    public void setMessageBody(TextMessageBody messageBody) {
-        this.messageBody = messageBody;
-    }
-
-    public XXMessage(){}
-
-    public XXMessage(String from, String to, String type, TextMessageBody body, String time, String fromNick) {
+    public MessageBean(String from, String to, String type, String content, String time, String fromNick) {
         this.from = from;
         this.to = to;
         this.type = type;
         this.time = time;
         this.fromNick = fromNick;
-        this.messageBody = body;
     }
+
+    public XXMessageBody getXXMessageBody() {
+        return mXXMessageBody;
+    }
+
+    public void setXXMessageBody(XXMessageBody _XXMessageBody) {
+        mXXMessageBody = _XXMessageBody;
+    }
+
 
     public String getFrom() {
         return from;
     }
 
-    public void setFrom(String _from) {
-        from = _from;
+    public void setFrom(String from) {
+        this.from = from;
     }
 
-    public String getTo() {
-        return to;
+    public int getFromAvatar() {
+        return fromAvatar;
     }
 
-    public void setTo(String _to) {
-        to = _to;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String _type) {
-        type = _type;
-    }
-    
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String _time) {
-        time = _time;
+    public void setFromAvatar(int fromAvatar) {
+        this.fromAvatar = fromAvatar;
     }
 
     public String getFromNick() {
         return fromNick;
     }
 
-    public void setFromNick(String _fromNick) {
-        fromNick = _fromNick;
+    public void setFromNick(String fromNick) {
+        this.fromNick = fromNick;
     }
 
-    public String toJson() {
-        return JSON.toJSONString(this);
+    public String getTime() {
+        return time;
     }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public boolean isUnread() {
+        return unread;
+    }
+
+    public void setUnread(boolean unread) {
+        this.unread = unread;
+    }
+
 
     public void setAttribute(String key, boolean var2) {
         if (this.attributes == null) {
@@ -294,5 +292,6 @@ public class XXMessage {
             throw new Exception("attribute " + var1 + " not found");
         }
     }
+
 
 }
