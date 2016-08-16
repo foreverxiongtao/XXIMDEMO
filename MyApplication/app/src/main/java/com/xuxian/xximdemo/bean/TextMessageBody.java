@@ -28,6 +28,8 @@ public class TextMessageBody extends XXMessageBody {
         return content;
     }
 
+    public TextMessageBody(){}
+
     public void setContent(String _content) {
         content = _content;
     }

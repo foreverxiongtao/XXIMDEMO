@@ -36,6 +36,7 @@ public class XXMessage {
     //private XXMessageBody messageBody; //消息实体
     private TextMessageBody messageBody;//消息实体
 
+
     public int getFromAvatar() {
         return fromAvatar;
     }
